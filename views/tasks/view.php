@@ -51,7 +51,12 @@ PROGRESS_BAR;
                 }
             ],
             'progress',
-            'priority',
+            [
+                'attribute' => 'priority',
+                'value' => function ($model){
+                    return CustomHelpers::evaluatePriority($model->priority);
+                }
+            ],
             'status',
         ],
     ]) ?>

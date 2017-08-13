@@ -12,7 +12,7 @@ use dosamigos\ckeditor\CKEditor;
 
 <div class="tasks-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['id' => 'taskCreate-form']); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -43,3 +43,22 @@ use dosamigos\ckeditor\CKEditor;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php
+$script = <<< JS
+    $('form#{$form->id}').on('beforeSubmit', function (e) {
+        var form = $(this);
+        $.ajax({
+            type: 'post',
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function(response){
+                $(form).trigger("reset");
+                $.pjax.reload({container: '#taskGrid'});
+            }
+        });
+        return false;
+    });
+JS;
+$this->registerJs($script); 
+?>

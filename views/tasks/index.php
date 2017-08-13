@@ -5,6 +5,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use app\helpers\CustomHelpers;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TasksSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -18,8 +20,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Add New Task', ['value' => Url::to('index.php?r=tasks/create'), 'class' => 'btn btn-success', 'id'=>'modalButton']) ?>
     </p>
-    <?php Pjax::begin(); ?>
+    <?php
+        Modal::begin([
+            'header' => '<h4>Create Task</h4>',
+            'id' => 'modal',
+            'size' => 'modal-lg'
+        ]);
+        echo "<div id='modalContent'></div>";
+        Modal::end();
+    ?>
+    <?php Pjax::begin(['id' => 'taskGrid']); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,

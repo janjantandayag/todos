@@ -92,11 +92,17 @@ class TasksController extends Controller
             $user = User::findOne(Yii::$app->user->identity->user_id);
             $task->save();
             $task->link('users', $user);
-            return $this->redirect(['view', 'id' => $task->task_id]);
+            // return $this->redirect(['view', 'id' => $task->task_id]);
         } else {
-            return $this->render('create', [
-                'model' => $task,
-            ]);
+            if(Yii::$app->request->isAjax) {
+                return $this->renderAjax('create', [
+                    'model' => $task,
+                ]); 
+            } else {
+                return $this->render('create', [
+                    'model' => $task,
+                ]);                 
+            }
         }
     }
 
