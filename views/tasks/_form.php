@@ -32,9 +32,9 @@ use dosamigos\ckeditor\CKEditor;
         ]
     ]) ?>
 
-    <?= $form->field($model, 'priority')->dropDownList([ 'LOW' => 'LOW', 'NORMAL' => 'NORMAL', 'HIGH' => 'HIGH', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'priority')->dropDownList([ '1' => 'LOW', '2' => 'NORMAL', '3' => 'HIGH', ], ['prompt' => 'Select priority']) ?>
 
-    <?= $form->field($model, 'status')->dropDownList([ 'ENABLED' => 'ENABLED', 'CANCELLED' => 'CANCELLED', 'FINISHED' => 'FINISHED', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status')->dropDownList([ 'ENABLED' => 'ENABLED', 'CANCELLED' => 'CANCELLED', 'FINISHED' => 'FINISHED', ], ['prompt' => 'Select status']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

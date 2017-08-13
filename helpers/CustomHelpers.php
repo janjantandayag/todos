@@ -20,13 +20,26 @@ class CustomHelpers{
         return $class;
 	}
 
-    public static function getBgColor($value) {
-        if($value == 'LOW'){
+    public static function getBgColor($value) 
+    {
+        if($value == '1'){
             return ['class' => 'bg-success'];
-        }elseif($value == 'NORMAL'){
+        }elseif($value == '2'){
             return ['class' => 'bg-warning'];
         }else{
             return ['class' => 'bg-danger'];
         }
+    }
+
+    public static function evaluatePriority($value)
+    {
+        if($value == '1'){
+            return 'LOW';
+        }elseif($value == '2'){
+            return 'NORMAL';
+        }else{
+            return 'HIGH';
+        }
+
     }
 }

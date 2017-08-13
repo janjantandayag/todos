@@ -24,6 +24,13 @@ class TasksSearch extends Tasks
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'global_search' => 'Global Search'
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -75,6 +82,8 @@ class TasksSearch extends Tasks
                 ['LIKE', 'progress', $this->global_search]
             ]
         ]);
+        // var_dump($query->prepare(Yii::$app->db->queryBuilder)->createCommand()->rawSql);
+        // die();
         // $query->orFilterWhere(['like', 'title', $this->global_search])
         //     ->orFilterWhere(['like', 'description', $this->global_search])
         //     ->orFilterWhere(['like', 'priority', $this->global_search])

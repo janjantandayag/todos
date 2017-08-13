@@ -52,9 +52,23 @@ $this->params['breadcrumbs'][] = $this->title;
 PROGRESS_BAR;
                 },
             ],
-            'priority',
+            [
+                'attribute' => 'priority',
+                'value' => function ($model){
+                    return CustomHelpers::evaluatePriority($model->priority);
+                }
+            ],
             'status',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Action',
+                'template' => '{view} {update} {delete}',
+                'headerOptions' => [
+                    'style' => [
+                        'color' => '#337ab7'
+                    ]
+                ]
+            ],
         ]
     ]); ?>
     <?php Pjax::end(); ?>

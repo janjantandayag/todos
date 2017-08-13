@@ -70,9 +70,13 @@ class TasksController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(User::hasThisTask($id)) {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        } else {
+            throw new NotFoundHttpException("You don't own this post!");            
+        }
     }
 
     /**
@@ -126,11 +130,15 @@ class TasksController extends Controller
      */
     public function actionDelete($id)
     {
-        $user = User::findOne(Yii::$app->user->identity->user_id);
-        $task = $this->findModel($id);
-        $task->delete();
-        $task->unlink('users',$user);
-        return $this->redirect(['index']);
+        if(User::hasThisTask($id)) {
+            $user = User::findOne(Yii::$app->user->identity->user_id);
+            $task = $this->findModel($id);
+            $task->delete();
+            $task->unlink('users',$user);
+            return $this->redirect(['index']);
+        } else {
+            throw new NotFoundHttpException("You don't own this post!");            
+        }
     }
 
     /**

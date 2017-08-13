@@ -152,3 +152,6 @@ a.desc:after {
     width:150px;
     border-radius: 50%;
 }
+.progress-bar{
+    color:#000;
+}
