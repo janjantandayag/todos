@@ -1,21 +1,21 @@
 <?php
 
 use yii\helpers\Html;
-use wbraganca\dynamicform\DynamicFormWidget;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Tasks */
+/* @var $model app\models\PoItem */
 
-$this->title = 'Create Tasks';
-$this->params['breadcrumbs'][] = ['label' => 'Tasks', 'url' => ['index']];
+$this->title = 'Create Po Item';
+$this->params['breadcrumbs'][] = ['label' => 'Po Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tasks-create">
+<div class="po-item-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
+
 </div>
