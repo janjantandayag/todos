@@ -16,6 +16,13 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'global_search') ?>
+    <?= $form->field($model, 'progress')->dropDownList([ 
+        'all' => 'All', 
+        'not-completed' => 'Not Completed', 
+        'not-started' => 'Not Started', 
+        'in-prog' => 'In Progress',
+        'completed' => 'Completed'
+    ]) ?>
 
     <?php // echo $form->field($model, 'status') ?>
 

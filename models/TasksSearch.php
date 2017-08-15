@@ -19,7 +19,7 @@ class TasksSearch extends Tasks
     public function rules()
     {
         return [
-            [['task_id', 'progress'], 'integer'],
+            [['task_id'], 'integer'],
             [['title', 'description', 'priority', 'status','progress','global_search'], 'safe'],
         ];
     }
@@ -56,9 +56,6 @@ class TasksSearch extends Tasks
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
-        $this->load($params);
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');

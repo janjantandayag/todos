@@ -8,13 +8,14 @@ use dosamigos\ckeditor\CKEditor;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tasks */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="tasks-form">
 
     <?php $form = ActiveForm::begin(['id' => 'taskCreate-form']); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'title')->textInput() ?>
 
     <?= $form->field($model, 'description')->widget(CKEditor::className(), [
         'options' => ['rows' => 6],
@@ -37,28 +38,47 @@ use dosamigos\ckeditor\CKEditor;
     <?= $form->field($model, 'status')->dropDownList([ 'ENABLED' => 'ENABLED', 'CANCELLED' => 'CANCELLED', 'FINISHED' => 'FINISHED', ], ['prompt' => 'Select status']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton('Save', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-success',
+            'name' => 'create-button',
+            'value'=>'save'
+        ]) ?>
+         <?= Html::submitButton('Save & Close', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-success',
+            'name' => 'create-button',
+            'value'=>'save-close'
+        ]) ?>
+         <?= Html::submitButton('Save & New', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-success',
+            'name' => 'create-button',
+            'value'=>'save-new'
+        ]) ?>
+
+         <?= Html::a('Cancel', ['index'], ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-success' ]) ?>
+
     </div>
 
     <?php ActiveForm::end(); ?>
+</div> 
 
-</div>
 
 <?php
-$script = <<< JS
-    $('form#{$form->id}').on('beforeSubmit', function (e) {
-        var form = $(this);
-        $.ajax({
-            type: 'post',
-            url: form.attr('action'),
-            data: form.serialize(),
-            success: function(response){
-                $(form).trigger("reset");
-                $.pjax.reload({container: '#taskGrid'});
-            }
+if(Yii::$app->request->isAjax){
+    $script = <<< JS
+        $('form#{$form->id}').on('beforeSubmit', function (e) {
+            var form = $(this);
+            $.ajax({
+                type: 'post',
+                url: form.attr('action'),
+                data: form.serialize(),
+                success: function(response){
+                    if (response.status == 'success') {
+                        $('#task-modal').modal('hide');
+                        $(form).trigger("reset");
+                        $.pjax.reload({container: '#taskGrid'});
+                    } 
+                }
+            });
+            return false;
         });
-        return false;
-    });
 JS;
-$this->registerJs($script); 
+    $this->registerJs($script); 
+}
 ?>

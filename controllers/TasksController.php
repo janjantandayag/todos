@@ -89,10 +89,18 @@ class TasksController extends Controller
         $task = new Tasks();
 
         if ($task->load(Yii::$app->request->post())) {
+            $buttonClick = Yii::$app->request->post('create-button');
             $user = User::findOne(Yii::$app->user->identity->user_id);
             $task->save();
             $task->link('users', $user);
-            // return $this->redirect(['view', 'id' => $task->task_id]);
+            if (Yii::$app->request->isAjax){
+                Yii::$app->response->format = 'json';
+                return [
+                    'status' => 'success',
+                ];
+            } else {                    
+                $this->directTo($task,$buttonClick);
+            }
         } else {
             if(Yii::$app->request->isAjax) {
                 return $this->renderAjax('create', [
@@ -160,6 +168,18 @@ class TasksController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    protected function directTo($task, $buttonClick){
+        if($buttonClick == 'save'){
+            return $this->redirect(['update', 'id' => $task->task_id]);
+        }elseif($buttonClick == 'save-close'){
+            return $this->redirect(['index']);                        
+        }elseif($buttonClick == 'save-new'){
+            return $this->redirect(['create']);                        
+        }else{
+            return $this->redirect(['index']);                          
         }
     }
 }

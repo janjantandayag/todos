@@ -37,7 +37,7 @@ class Tasks extends \yii\db\ActiveRecord
             [['progress'], 'integer'],
             [['priority', 'status'], 'string'],
             [['title'], 'string', 'max' => 50],
-            [['description'], 'string', 'max' => 100],
+            [['description'], 'string'],
         ];
     }
 

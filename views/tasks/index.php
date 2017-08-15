@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tasks-index">
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?= $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
         Modal::begin([
             'header' => '<h4>Create Task</h4>',
-            'id' => 'modal',
+            'id' => 'task-modal',
             'size' => 'modal-lg'
         ]);
         echo "<div id='modalContent'></div>";
