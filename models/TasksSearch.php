@@ -13,6 +13,7 @@ use app\models\Tasks;
 class TasksSearch extends Tasks
 {
     public $global_search='';
+    public $progress ='not-completed';
     /**
      * @inheritdoc
      */
@@ -51,23 +52,18 @@ class TasksSearch extends Tasks
     {
         $query = Tasks::find()->joinWith('users', true);
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+        $this->load($params);
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
 
-        // // grid filtering conditions
-        // $query->andFilterWhere([
-        //     // 'user_task.task_id' => $this->task_id,
-        //     // 'progress' => $this->progress,
-        // ]);
         $id = Yii::$app->user->identity->user_id;
+        $value = $this->toQuery($this->progress);
         $query->where([
             'and', 
             ['user_task.user_id' => $id],
@@ -76,21 +72,14 @@ class TasksSearch extends Tasks
                 ['LIKE', 'title', $this->global_search],
                 ['LIKE', 'priority', $this->global_search],
                 ['LIKE', 'status', $this->global_search],
-                ['LIKE', 'progress', $this->global_search]
             ]
         ]);
-        // var_dump($query->prepare(Yii::$app->db->queryBuilder)->createCommand()->rawSql);
-        // die();
-        // $query->orFilterWhere(['like', 'title', $this->global_search])
-        //     ->orFilterWhere(['like', 'description', $this->global_search])
-        //     ->orFilterWhere(['like', 'priority', $this->global_search])
-        //     ->orFilterWhere(['like', 'status', $this->global_search]);
 
-        // $query->where("AND") 
-        //         ->orFilterWhere(['like', 'description', $this->global_search])
-        //         ->orFilterWhere(['like', 'priority', $this->global_search])
-        //         ->orFilterWhere(['like', 'title', $this->global_search])
-        //         ->orFilterWhere(['like', 'status', $this->global_search]);
+        if($this->progress <> 'all'){
+            $query -> andWhere([
+                $value['operator'],'progress',$value['value'] 
+            ]);
+        }
         return $dataProvider;
         }
 }

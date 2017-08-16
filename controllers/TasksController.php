@@ -182,4 +182,16 @@ class TasksController extends Controller
             return $this->redirect(['index']);                          
         }
     }
+
+    public function actionLanguage()
+    {
+        if(isset($_POST['lang'])){
+            Yii::$app->language = $_POST['lang'];
+            $cookie = new yii\web\Cookie([
+                'name' => 'lang',
+                'value' => $_POST['lang']
+            ]);
+            Yii::$app->getResponse()->getCookies()->add($cookie);
+        }
+    }
 }

@@ -32,7 +32,7 @@ return [
                 'domain' => 'localhost',
             ],
             */
-        ],        
+        ],       
     ],
     'params' => $params,
 ];

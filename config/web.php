@@ -7,7 +7,29 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'modules' => [
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+            // enter optional module parameters below - only if you need to  
+            // use your own export download action or custom translation 
+            // message source
+            // 'downloadAction' => 'gridview/export/download',
+            // 'i18n' => []
+         ]
+    ],
     'components' => [
+        'i18n' => [
+            'translations' => [
+                'asdf' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'en',
+                    'fileMap' => [
+                        'app' => 'app.php',
+                        'app/eror' => 'error.php'
+                    ]
+                ]
+            ]
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '4A7l20DPST_4wzVnlxBvw2_2qbdunlB-',
@@ -47,6 +69,9 @@ $config = [
             ],
         ],
         */
+    ],
+    'as beforeRequest' => [
+        'class' => 'app\components\ChangeLanguage'
     ],
     'params' => $params,
 ];

@@ -8,7 +8,7 @@ $this->title = 'My Yii Application';
 
     <div class="jumbotron">
         <h1 style="font-style: italic">TODOs</h1   >
-       
+            
         	<?php if(!Yii::$app->user->isGuest) : ?>
             <div class="app_main_profilepic_container">
                 <img src="<?= Yii::$app->user->identity->profile_pic ?>" class="app_main_profilepic" />

@@ -155,3 +155,18 @@ a.desc:after {
 .progress-bar{
     color:#000;
 }
+.lang-container{
+    margin-top:15px;
+}
+.language{
+    font-size:85%;
+    color:#9d9d9d;
+    cursor:pointer;
+    float:right;
+    margin-right:10px
+}
+.lang-active{
+    color:#fff;
+    text-transform: uppercase;
+    pointer-events: none;
+}

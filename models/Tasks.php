@@ -71,4 +71,25 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return $this->hasMany(User::className(), ['user_id' => 'user_id'])->viaTable('user_task', ['task_id' => 'task_id']);
     }
+
+    /**
+    * Transform selected progress to query 
+    * @return operator/value
+    */
+    public function toQuery($progress){
+        if($progress == 'not-completed'){
+            $value['operator'] = '<';
+            $value['value'] = '100';
+        } elseif($progress == 'not-started' ){
+            $value['operator'] = '=';
+            $value['value'] = '0';
+        }elseif($progress == 'in-prog' ){
+            $value['operator'] = 'NOT IN';
+            $value['value']= [0,100];
+        }else{
+            $value['operator'] = '=';
+            $value['value'] = '100';
+        }
+        return $value;
+    }
 }
