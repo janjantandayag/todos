@@ -6,7 +6,7 @@ use yii\widgets\Pjax;
 use app\helpers\CustomHelpers;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-use kartik\grid\GridView;
+use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TasksSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,
-        'striped' => false,        
         'tableOptions' => ['class' => 'table table-bordered'],
         'rowOptions'=> function($model){
             return CustomHelpers::getBgColor($model->priority);

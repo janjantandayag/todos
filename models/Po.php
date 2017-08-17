@@ -31,7 +31,7 @@ class Po extends \yii\db\ActiveRecord
         return [
             [['po_no', 'description'], 'required'],
             [['description'], 'string'],
-            [['po_no'], 'string', 'max' => 10],
+            [['po_no'], 'string', 'max' => 10]
         ];
     }
 

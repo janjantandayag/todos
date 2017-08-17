@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\PoItem;
 use app\models\Model;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 /**
  * PoController implements the CRUD actions for Po model.
  */
@@ -39,6 +40,31 @@ class PoController extends Controller
     {
         $searchModel = new PoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if(Yii::$app->request->post('hasEditable')){
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            $po_no  = Yii::$app->request->post('editableKey');  
+            $po = $this->findModel($po_no);
+
+            $post = [];
+            $value = '';
+            if(Yii::$app->request->post('po_no')){
+                $value = Yii::$app->request->post('editableKey');
+            }
+            if(Yii::$app->request->post('description')){
+                $value.= Yii::$app->request->post('description');
+            }
+
+            $posted = current($_POST['Po']);
+            $post['Po'] = $posted;
+            if($po->load($post)){
+                $po->save(); 
+                return ['output'=>$value, 'message' => ''];
+            } else {
+                return ['output'=>'', 'message' => ''];
+            }            
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,

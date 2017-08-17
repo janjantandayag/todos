@@ -27,7 +27,7 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['logout'],
+                        'actions' => ['logout','set-cookie','show-cookie'],
                         'roles' => ['@'],
                     ],
                     [
@@ -126,6 +126,23 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionSetCookie()
+    {
+        $cookie = new yii\web\Cookie([
+            'name' => 'test2',
+            'value'=> 'test cookie value2'
+        ]);
+        Yii::$app->response->cookies->add($cookie);
+    }
+
+    public function actionShowCookie()
+    {
+        if(Yii::$app->request->cookies){
+            var_dump(Yii::$app->request->cookies);
+            die();
+        }
     }
 
 }
