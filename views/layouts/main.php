@@ -38,7 +38,6 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']], 
-            ['label' => 'English'],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Sign Up', 'url' => ['/site/signup']]
             ) : '',
@@ -59,10 +58,9 @@ AppAsset::register($this);
     ]);
     echo "<div class='lang-container'>";
     foreach (Yii::$app->params['languages'] as $key => $language) { 
+        $isActive = '';
         if(Yii::$app->language == $key){
             $isActive = "lang-active";
-        } else {
-            $isActive = '';
         }
         echo
         <<< LANG

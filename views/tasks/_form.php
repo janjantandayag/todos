@@ -15,12 +15,12 @@ use dosamigos\ckeditor\CKEditor;
 
     <?php $form = ActiveForm::begin(['id' => 'taskCreate-form']); ?>
 
-    <?= $form->field($model, 'title')->textInput()->label(Yii::t('app', 'Title')) ?>
+    <?= $form->field($model, 'title')->textInput() ?>
 
     <?= $form->field($model, 'description')->widget(CKEditor::className(), [
         'options' => ['rows' => 6],
         'preset' => 'standard',
-    ])->label(Yii::t('app', 'Description')) ?>
+    ]) ?>
 
     <?= $form->field($model, 'progress')->widget(Slider::classname(), [
         'name' => 'Progress',
@@ -31,12 +31,12 @@ use dosamigos\ckeditor\CKEditor;
             'max'=>100,
             'step'=>1,
         ]
-    ])->label(Yii::t('app', 'Progress')) ?>
+    ]) ?>
 
     <?= $form->field($model, 'priority')->dropDownList([ '1' => 'LOW', '2' => 'NORMAL', '3' => 'HIGH', ], ['prompt' => 'Select priority']
-    )->label(Yii::t('app', 'Priority')) ?>
+    ) ?>
 
-    <?= $form->field($model, 'status')->dropDownList([ 'ENABLED' => 'ENABLED', 'CANCELLED' => 'CANCELLED', 'FINISHED' => 'FINISHED', ], ['prompt' => 'Select status'])->label(Yii::t('app', 'Status')) ?>
+    <?= $form->field($model, 'status')->dropDownList([ 'ENABLED' => 'ENABLED', 'CANCELLED' => 'CANCELLED', 'FINISHED' => 'FINISHED', ], ['prompt' => 'Select status']) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-success',

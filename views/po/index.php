@@ -45,7 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'kartik\grid\EditableColumn',
                 'attribute' => 'po_no',
-
             ],
             [
                 'class' => 'kartik\grid\EditableColumn',

@@ -7,43 +7,13 @@ use app\helpers\CustomHelpers;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use yii\grid\GridView;
+use kartik\export\ExportMenu;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TasksSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title = 'Tasks';
-$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="tasks-index">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?= $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::button('Add New Task', ['value' => Url::to('index.php?r=tasks/create'), 'class' => 'btn btn-success', 'id'=>'modalButton']) ?>
-    </p>
-    <?php
-        Modal::begin([
-            'header' => '<h4>Create Task</h4>',
-            'id' => 'task-modal',
-            'size' => 'modal-lg'
-        ]);
-        echo "<div id='modalContent'></div>";
-        Modal::end();
-    ?>
-    <?php Pjax::begin(['id' => 'taskGrid']); ?>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        // 'filterModel' => $searchModel,
-        'tableOptions' => ['class' => 'table table-bordered'],
-        'rowOptions'=> function($model){
-            return CustomHelpers::getBgColor($model->priority);
-        },
-        
-        'columns' => [
+$gridColumns = [
             ['class' => 'yii\grid\SerialColumn'],
             [
-                'label' => 'Task Title',
                 'format' => 'raw',
                 'attribute' => 'title',
                 'value' => function($model){
@@ -82,7 +52,45 @@ PROGRESS_BAR;
                     ]
                 ]
             ],
-        ],
+        ];
+
+$this->title = 'Tasks';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="tasks-index">
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?= $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a('Create Tasks', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Add New Task', ['value' => Url::to('index.php?r=tasks/create'), 'class' => 'btn btn-success', 'id'=>'modalButton']) ?>
+    </p>
+    <?php
+        Modal::begin([
+            'header' => '<h4>Create Task</h4>',
+            'id' => 'task-modal',
+            'size' => 'modal-lg'
+        ]);
+        echo "<div id='modalContent'></div>";
+        Modal::end();
+    ?>
+    <?= ExportMenu::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $gridColumns,
+        'dropdownOptions' => [
+            'label' => 'Export All',
+            'class' => 'btn btn-default'
+        ]
+    ])?>
+    <?php Pjax::begin(['id' => 'taskGrid']); ?>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        // 'filterModel' => $searchModel,
+        'tableOptions' => ['class' => 'table table-bordered'],
+        'rowOptions'=> function($model){
+            return CustomHelpers::getBgColor($model->priority);
+        },        
+        'columns' => $gridColumns
     ]); ?>
     <?php Pjax::end(); ?>
 </div>

@@ -53,7 +53,7 @@ class PoController extends Controller
                 $value = Yii::$app->request->post('editableKey');
             }
             if(Yii::$app->request->post('description')){
-                $value.= Yii::$app->request->post('description');
+                $value = Yii::$app->request->post('description');
             }
 
             $posted = current($_POST['Po']);

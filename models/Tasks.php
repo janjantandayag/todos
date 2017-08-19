@@ -48,11 +48,11 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             'task_id' => 'Task ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'progress' => 'Progress',
-            'priority' => 'Priority',
-            'status' => 'Status',
+            'title' => Yii::t('app', 'Title'),
+            'description' => Yii::t('app', 'Description'),
+            'progress' => Yii::t('app', 'Progress'),
+            'priority' => Yii::t('app', 'Priority'),
+            'status' => Yii::t('app', 'Status'),
         ];
     }
 

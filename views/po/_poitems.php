@@ -7,8 +7,6 @@ use kartik\grid\GridView;
 /* @var $searchModel app\models\PoItemSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Po Items';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="po-item-index">
     <?= GridView::widget([
